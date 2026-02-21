@@ -13,7 +13,7 @@
 
     body {
       font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background: #0d1117; /* fundo bem escuro tipo Roblox atual */
+      background: #0d1117;
       color: #e1e1e1;
       min-height: 100vh;
       display: flex;
@@ -22,7 +22,6 @@
       background-image: 
         radial-gradient(circle at 20% 30%, rgba(0, 170, 255, 0.08) 0%, transparent 40%),
         radial-gradient(circle at 80% 70%, rgba(170, 0, 255, 0.06) 0%, transparent 50%);
-      background-size: 100% 100%;
     }
 
     .container {
@@ -31,18 +30,18 @@
       padding: 40px 30px;
       background: rgba(20, 20, 25, 0.92);
       border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
-      border: 1px solid rgba(100, 100, 120, 0.25);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+      border: 1px solid rgba(100,100,120,0.25);
       text-align: center;
     }
 
     .logo {
-      font-size: 3.2rem;
+      font-size: 3.4rem;
       font-weight: bold;
       color: #00aaff;
       margin-bottom: 8px;
-      letter-spacing: -1px;
-      text-shadow: 0 0 20px rgba(0, 170, 255, 0.4);
+      letter-spacing: -2px;
+      text-shadow: 0 0 20px rgba(0,170,255,0.4);
     }
 
     .subtitle {
@@ -71,13 +70,13 @@
       background: #1a1a22;
       color: white;
       font-size: 1rem;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     input:focus {
       outline: none;
       border-color: #00aaff;
-      box-shadow: 0 0 0 3px rgba(0, 170, 255, 0.25);
+      box-shadow: 0 0 0 3px rgba(0,170,255,0.25);
     }
 
     .btn-login {
@@ -97,12 +96,40 @@
     .btn-login:hover {
       background: #0088dd;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 140, 230, 0.4);
+      box-shadow: 0 6px 20px rgba(0,140,230,0.4);
+    }
+
+    .error-message {
+      background: rgba(255, 80, 80, 0.15);
+      color: #ff6666;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 16px 0;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+      border: 1px solid rgba(255, 80, 80, 0.3);
+    }
+
+    .error-message.show {
+      opacity: 1;
+      transform: translateY(0);
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
     }
 
     .links {
       font-size: 0.92rem;
       color: #8888aa;
+      margin: 16px 0;
     }
 
     .links a {
@@ -113,11 +140,10 @@
 
     .links a:hover {
       text-decoration: underline;
-      color: #44ccff;
     }
 
     .signup {
-      margin-top: 28px;
+      margin-top: 24px;
       font-size: 0.95rem;
     }
 
@@ -138,7 +164,7 @@
     <div class="logo">R O B L O X</div>
     <div class="subtitle">Entre na sua conta</div>
 
-    <form>
+    <form id="loginForm">
       <div class="form-group">
         <label for="username">Nome de usuário / Email / Telefone</label>
         <input type="text" id="username" placeholder="Digite seu usuário ou email" required>
@@ -148,6 +174,8 @@
         <label for="password">Senha</label>
         <input type="password" id="password" placeholder="Senha" required>
       </div>
+
+      <div id="errorMsg" class="error-message">Senha ou nome inválido!!</div>
 
       <button type="submit" class="btn-login">Entrar</button>
     </form>
@@ -161,5 +189,32 @@
     </div>
   </div>
 
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    // Sempre mostra erro ao tentar entrar (como pedido)
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // impede reload da página
+
+      // Mostra a mensagem com animação
+      errorMsg.classList.add('show');
+
+      // Pequeno delay pra animação ficar visível mesmo se clicar várias vezes rápido
+      setTimeout(() => {
+        errorMsg.classList.add('show');
+      }, 10);
+    });
+
+    // Esconde a mensagem de erro assim que o usuário começa a digitar
+    [usernameInput, passwordInput].forEach(input => {
+      input.addEventListener('input', function() {
+        errorMsg.classList.remove('show');
+      });
+    });
+  </script>
+
 </body>
-    </html>
+</html>
