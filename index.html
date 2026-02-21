@@ -85,6 +85,7 @@
       font-weight: 500;
       cursor: pointer;
       transition: background 0.2s;
+      margin-top: 12px;
     }
 
     button:hover {
@@ -92,7 +93,7 @@
     }
 
     .error-message {
-      margin-top: 16px;
+      margin: 0 0 16px 0;
       padding: 10px;
       background: rgba(255, 0, 0, 0.2);
       border: 1px solid #ff4d4d;
@@ -101,7 +102,7 @@
       font-size: 14px;
       font-weight: 500;
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(-10px);
       transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: none;
     }
@@ -173,9 +174,9 @@
         <input type="password" placeholder="Password" required autocomplete="current-password">
       </div>
 
-      <button type="submit">Log In</button>
-
       <div class="error-message" id="errorMsg">Senha inválida ou Nome Incorreto!!</div>
+
+      <button type="submit">Entrar</button>
     </form>
 
     <div class="links">
@@ -194,12 +195,10 @@
     const errorMsg = document.getElementById('errorMsg');
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Impede envio real do form
+      e.preventDefault();
 
-      // Mostra a mensagem com animação
       errorMsg.classList.add('show');
 
-      // Esconde depois de 3 segundos
       setTimeout(() => {
         errorMsg.classList.remove('show');
       }, 3000);
